@@ -183,6 +183,16 @@ And it shows
 {"message":"Hello from remote"}
 ```
 
+Call remote service (with cor-relation-id)
+```
+curl localhost:9081/v1.0/invoke/dapr-remote/method/remote/trace
+```
+
+And it shows again
+```json
+{"message":"Hello from remote"}
+```
+
 Access to the zipkin UI server and have fun!
 
 http://localhost:9411/zipkin/
