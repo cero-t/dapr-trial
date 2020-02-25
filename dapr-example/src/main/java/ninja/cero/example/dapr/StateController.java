@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/state/{key}")
+@RequestMapping("/state/{storeName}/{key}")
 public class StateController {
     @Value("http://localhost:${dapr.http.port}/v1.0")
     private String baseUrl;
@@ -17,18 +17,18 @@ public class StateController {
     private RestTemplate restTemplate = new RestTemplate();
 
     @PostMapping
-    public Map store(@PathVariable String key, @RequestBody Map data) {
+    public Map store(@PathVariable String storeName, @PathVariable String key, @RequestBody Map data) {
         var map = new HashMap<>();
         map.put("key", key);
         map.put("value", data);
 
         var payload = new Map[]{map};
-        return restTemplate.postForObject(baseUrl + "/state", payload, Map.class);
+        return restTemplate.postForObject(baseUrl + "/state/" + storeName, payload, Map.class);
     }
 
     @GetMapping
-    public Map read(@PathVariable String key) {
-        return restTemplate.getForObject(baseUrl + "/state/" + key,
+    public Map read(@PathVariable String storeName, @PathVariable String key) {
+        return restTemplate.getForObject(baseUrl + "/state/" + storeName + "/" + key,
                 Map.class);
     }
 }

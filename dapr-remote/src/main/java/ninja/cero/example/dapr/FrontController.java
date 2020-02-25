@@ -25,14 +25,14 @@ public class FrontController {
     @GetMapping
     public Map read() {
         var data = Map.of("message", "Hello from remote");
-        var res = restTemplate.postForEntity(baseUrl + "/invoke/hello-dapr/method/state/r1",
+        var res = restTemplate.postForEntity(baseUrl + "/invoke/hello-dapr/method/state/statestore/r1",
                 data, Map.class);
 
         if (res.getStatusCodeValue() / 100 != 2) {
             throw new RuntimeException(res.getStatusCodeValue() + " " + res.getStatusCode().getReasonPhrase());
         }
 
-        return restTemplate.getForObject(baseUrl + "/invoke/hello-dapr/method/state/r1",
+        return restTemplate.getForObject(baseUrl + "/invoke/hello-dapr/method/state/statestore/r1",
                 Map.class);
     }
 
@@ -46,7 +46,7 @@ public class FrontController {
         headers.add("x-correlation-id", corId);
         var entity = new HttpEntity<>(data, headers);
 
-        var res = restTemplate.exchange(baseUrl + "/invoke/hello-dapr/method/state/r2",
+        var res = restTemplate.exchange(baseUrl + "/invoke/hello-dapr/method/state/statestore/r2",
                 HttpMethod.POST, entity, Map.class);
 
         if (res.getStatusCodeValue() / 100 != 2) {
@@ -54,7 +54,7 @@ public class FrontController {
                     + " " + res.getStatusCode().getReasonPhrase());
         }
 
-        return restTemplate.exchange(baseUrl + "/invoke/hello-dapr/method/state/r2",
+        return restTemplate.exchange(baseUrl + "/invoke/hello-dapr/method/state/statestore/r2",
                 HttpMethod.GET, new HttpEntity<>(headers), Map.class).getBody();
     }
 }
