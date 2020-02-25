@@ -13,10 +13,15 @@ Following tools should be installed.
 
 ### 1. Hello World
 
+Build project
+```
+cd dapr-trial
+./mvnw clean package
+```
+
 Start dapr
 ```
-cd dapr-example
-dapr run --app-id hello-dapr --app-port 8080 --port 9080 ./mvnw spring-boot:run
+dapr run --app-id hello-dapr --app-port 8080 --port 9080 -- java -jar dapr-example/target/dapr-example-0.0.1-SNAPSHOT.jar
 ```
 
 Access to the dapr process
@@ -33,13 +38,12 @@ Hello, Dapr World
 
 Start dapr (if not running)
 ```
-cd dapr-example
-dapr run --app-id hello-dapr --app-port 8080 --port 9080 ./mvnw spring-boot:run
+dapr run --app-id hello-dapr --app-port 8080 --port 9080 -- java -jar dapr-example/target/dapr-example-0.0.1-SNAPSHOT.jar
 ```
 
 Store data by Dapr State Management API
 ```
-curl -XPOST localhost:9080/v1.0/state -H "Content-type:application/json" -d '[{"key":"test-message1","value":{"name":"cero_t","joke":"cool"}}]' -i
+curl -XPOST localhost:9080/v1.0/state/statestore -H "Content-type:application/json" -d '[{"key":"test-message1","value":{"name":"cero_t","joke":"cool"}}]' -i
 ```
 
 And it shows
@@ -52,7 +56,7 @@ Content-Length: 0
 
 Retrive data by Dapr State Management API
 ```
-curl localhost:9080/v1.0/state/test-message1
+curl localhost:9080/v1.0/state/statestore/test-message1
 ```
 
 And it shows
@@ -88,14 +92,12 @@ And it shows
 
 Start dapr (if not running)
 ```
-cd dapr-example
-dapr run --app-id hello-dapr --app-port 8080 --port 9080 ./mvnw spring-boot:run
+dapr run --app-id hello-dapr --app-port 8080 --port 9080 -- java -jar dapr-example/target/dapr-example-0.0.1-SNAPSHOT.jar
 ```
 
 Start another dapr
 ```
-cd dapr-remote
-dapr run --app-id dapr-remote --app-port 8081 --port 9081 ./mvnw spring-boot:run
+dapr run --app-id dapr-remote --app-port 8081 --port 9081 -- java -jar dapr-remote/target/dapr-remote-0.0.1-SNAPSHOT.jar
 ```
 
 Call remote service
@@ -110,16 +112,10 @@ And it shows
 
 ### 4. Publish and Subscribe Message
 
-Start dapr (if not running)
+Start dapr and another dapr (if not running)
 ```
-cd dapr-example
-dapr run --app-id hello-dapr --app-port 8080 --port 9080 ./mvnw spring-boot:run
-```
-
-Start another dapr (if not running)
-```
-cd dapr-remote
-dapr run --app-id dapr-remote --app-port 8081 --port 9081 ./mvnw spring-boot:run
+dapr run --app-id hello-dapr --app-port 8080 --port 9080 -- java -jar dapr-example/target/dapr-example-0.0.1-SNAPSHOT.jar
+dapr run --app-id dapr-remote --app-port 8081 --port 9081 -- java -jar dapr-remote/target/dapr-remote-0.0.1-SNAPSHOT.jar
 ```
 
 Publish message by Dapr publish command
@@ -168,13 +164,13 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 Stop dapr and re-start with `--config` option
 ```
 (Ctrl-c)
-dapr run --app-id hello-dapr --app-port 8080 --port 9080 --config ./components/tracing.yaml ./mvnw spring-boot:run
+dapr run --app-id hello-dapr --app-port 8080 --port 9080 --config ./dapr-example/components/tracing.yaml -- java -jar dapr-example/target/dapr-example-0.0.1-SNAPSHOT.jar
 ```
 
 Stop another dapr and re-start with `--config` option
 ```
 (Ctrl-c)
-dapr run --app-id dapr-remote --app-port 8081 --port 9081 --config ./components/tracing.yaml ./mvnw spring-boot:run
+dapr run --app-id dapr-remote --app-port 8081 --port 9081 --config ./dapr-remote/components/tracing.yaml -- java -jar dapr-remote/target/dapr-remote-0.0.1-SNAPSHOT.jar
 ```
 
 Call remote service

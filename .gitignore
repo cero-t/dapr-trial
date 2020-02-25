@@ -4,5 +4,6 @@ target/
 !**/src/test/**
 
 .idea
+*.iml
 
 .DS_Store
