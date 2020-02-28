@@ -196,3 +196,32 @@ And it shows again
 Access to the zipkin UI server and have fun!
 
 http://localhost:9411/zipkin/
+
+### 6. OAuth
+
+Register a new GitHub App on your github page.
+
+https://github.com/settings/apps/
+
+- Homepage URL: ANY
+- User authorization callback URL: https://localhost:9080
+- Permissions: select nothing
+- Where can this GitHub App be installed?: Any account
+
+Copy clientId and clientSecret from your github app page to components/oauth.yaml
+```yaml
+    - name: clientId
+      value: "<your client ID>"
+    - name: clientSecret
+      value: "<your client secret>"
+```
+
+Stop dapr and re-start with `--config` option
+```
+(Ctrl-c)
+dapr run --app-id hello-dapr --app-port 8080 --port 9080 --config ./config/oauth.yaml -- java -jar dapr-example/target/dapr-example-0.0.1-SNAPSHOT.jar
+```
+
+Access the following page by web browser.
+
+http://localhost:9080/v1.0/invoke/hello-dapr/method/github
