@@ -164,13 +164,13 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 Stop dapr and re-start with `--config` option
 ```
 (Ctrl-c)
-dapr run --app-id hello-dapr --app-port 8080 --port 9080 --config ./components/tracing.yaml -- java -jar dapr-example/target/dapr-example-0.0.1-SNAPSHOT.jar
+dapr run --app-id hello-dapr --app-port 8080 --port 9080 --config ./config/tracing.yaml -- java -jar dapr-example/target/dapr-example-0.0.1-SNAPSHOT.jar
 ```
 
 Stop another dapr and re-start with `--config` option
 ```
 (Ctrl-c)
-dapr run --app-id dapr-remote --app-port 8081 --port 9081 --config ./components/tracing.yaml -- java -jar dapr-remote/target/dapr-remote-0.0.1-SNAPSHOT.jar
+dapr run --app-id dapr-remote --app-port 8081 --port 9081 --config ./config/tracing.yaml -- java -jar dapr-remote/target/dapr-remote-0.0.1-SNAPSHOT.jar
 ```
 
 Call remote service
