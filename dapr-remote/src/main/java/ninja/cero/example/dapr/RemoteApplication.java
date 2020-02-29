@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DaprApplication {
+public class RemoteApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DaprApplication.class, args);
+		SpringApplication.run(RemoteApplication.class, args);
 	}
 
 }
