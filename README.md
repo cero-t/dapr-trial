@@ -204,7 +204,7 @@ Register a new GitHub App on your github page.
 https://github.com/settings/apps/
 
 - Homepage URL: ANY
-- User authorization callback URL: https://localhost:9080
+- User authorization callback URL: http://localhost:9080
 - Permissions: select nothing
 - Where can this GitHub App be installed?: Any account
 
